@@ -257,9 +257,9 @@ postgresql:
     affinity: {}
     tolerations: []
   securityContext:
-    enabled: true
+    enabled: false
   containerSecurityContext:
-    enabled: true
+    enabled: false
 ## If NOT using the PostgreSQL in this chart (postgresql.enabled=false),
 ## you MUST specify custom database details here or Artifactory will NOT start
 database:
@@ -419,7 +419,9 @@ artifactory:
   circleOfTrustCertificatesSecret:
   ## unifiedSecretInstallation flag enables single unified secret holding all the artifactory-ha internal(chart) secrets, It won't be affecting external secrets.
   ## Note: unifiedSecretInstallation flag is enabled by true by default from chart version 107.78.x, Users can switch to false to continue with the old way of secret creation.
-  unifiedSecretInstallation: true
+  unifiedSecretInstallation: false
+  masterKeySecretName: my-masterkey-secret
+  joinKeySecretName: my-joinkey-secret
   ## unifiedSecretPrependReleaseName Set this flag to false if unifiedSecret should not be created with <release-name> prepended.
   unifiedSecretPrependReleaseName: true
   image:
@@ -779,11 +781,11 @@ artifactory:
   ## @param artifactory.podSecurityContext.fsGroup Group ID for the pod
   ##
   podSecurityContext:
-    enabled: true
-    runAsNonRoot: true
-    runAsUser: 1030
-    runAsGroup: 1030
-    fsGroup: 1030
+    enabled: false
+    # runAsNonRoot: true
+    # runAsUser: 1030
+    # runAsGroup: 1030
+    # fsGroup: 1030
     # fsGroupChangePolicy: "Always"
     # seLinuxOptions: {}
   ## The following settings are to configure the frequency of the liveness and startup probes.
@@ -1814,12 +1816,12 @@ nginx:
   replicaCount: 1
   minAvailable: 0
   podSecurityContext:
-    enabled: true
+    enabled: false
     runAsUser: 104
     runAsGroup: 107
     fsGroup: 107
   containerSecurityContext:
-    enabled: true
+    enabled: false
     runAsNonRoot: true
     privileged: false
     readOnlyRootFilesystem: false
@@ -2205,13 +2207,13 @@ rtfs:
     annotations: {}
     labels: {}
   podSecurityContext:
-    enabled: true
+    enabled: false
     runAsNonRoot: true
     runAsUser: 1030
     runAsGroup: 1030
     fsGroup: 1030
   containerSecurityContext:
-    enabled: true
+    enabled: false
     runAsNonRoot: true
     allowPrivilegeEscalation: false
     seccompProfile:
