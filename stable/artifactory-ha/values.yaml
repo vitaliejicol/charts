@@ -28,6 +28,9 @@ postgresql:
       enabled: false
 ingress:
   enabled: false
+
+ingressGrpc:
+  enabled: false
   
 nginx:
   podSecurityContext:
