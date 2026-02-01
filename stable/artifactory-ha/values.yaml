@@ -90,3 +90,7 @@ access:
       maxThreads: 200
       sendReasonPhrase: true
       extraConfig: ""
+database:
+  allowNonPostgresql: true
+  type: postgresql
+  driver: org.postgresql.Driver
