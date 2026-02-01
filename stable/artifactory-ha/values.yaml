@@ -9,6 +9,8 @@ artifactory:
     enabled: false
   coldStorage:
     enabled: false
+  worker:
+    enabled: false
 
 rtfs:
   podSecurityContext:
