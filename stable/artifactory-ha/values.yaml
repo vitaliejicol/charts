@@ -77,3 +77,14 @@ router:
 
 logging:
   logToStdoutJson: ...
+
+access:
+  database:
+    maxOpenConnections: 50
+    enabled: false
+  javaOpts: {}
+  tomcat:
+    connector:
+      maxThreads: 200
+      sendReasonPhrase: true
+      extraConfig: ""
