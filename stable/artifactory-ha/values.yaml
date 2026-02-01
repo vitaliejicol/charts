@@ -7,6 +7,8 @@ artifactory:
   joinKeySecretName: my-joinkey-secret
   podSecurityContext:
     enabled: false
+  coldStorage:
+    enabled: false
 
 rtfs:
   podSecurityContext:
