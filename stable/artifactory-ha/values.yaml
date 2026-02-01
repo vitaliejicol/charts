@@ -11,6 +11,8 @@ artifactory:
     enabled: false
   worker:
     enabled: false
+  primary:
+    javaOpts: {}
 
 rtfs:
   podSecurityContext:
