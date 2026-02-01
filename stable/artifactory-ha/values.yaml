@@ -66,3 +66,7 @@ filebeat:
 
 systemYamlOverride:
   existingSecret: ""
+
+router:
+  serviceRegistry:
+    insecure: false
