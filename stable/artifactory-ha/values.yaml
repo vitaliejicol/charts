@@ -26,7 +26,9 @@ postgresql:
       enabled: false
     containerSecurityContext:
       enabled: false
-
+ingress:
+  enabled: false
+  
 nginx:
   podSecurityContext:
     enabled: false
