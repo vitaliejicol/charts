@@ -28,3 +28,9 @@ nginx:
     enabled: false
   containerSecurityContext:
     enabled: false
+
+# 👇 REQUIRED to avoid Helm nil pointer
+unifiedpolicy:
+  enabled: false
+  autoscaling:
+    enabled: false
