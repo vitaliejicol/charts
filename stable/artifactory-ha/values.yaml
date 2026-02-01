@@ -1,30 +1,34 @@
+# Disable container-level security context globally
 containerSecurityContext:
   enabled: false
 
+# Artifactory pod-level security context
 artifactory:
-  unifiedSecretInstallation: false
-  masterKeySecretName: my-masterkey-secret
-  joinKeySecretName: my-joinkey-secret
   podSecurityContext:
     enabled: false
-  coldStorage:
-    enabled: false
+  primary:
+    javaOpts: {}       # Prevent nil pointer in templates
+  database:
+    maxOpenConnections: 50
+  tomcat:
+    connector:
+      maxThreads: 200
+      sendReasonPhrase: true
+      extraConfig: ""
   worker:
     enabled: false
-  primary:
-    javaOpts: {}
 
+# RTFS (if used)
 rtfs:
   podSecurityContext:
     enabled: false
   containerSecurityContext:
     enabled: false
-  persistence:
-    federationProperties: {}
-  autoscaling:
-    enabled: false
+  enabled: false
 
+# PostgreSQL (internal Helm chart)
 postgresql:
+  enabled: true
   primary:
     podSecurityContext:
       enabled: false
@@ -32,61 +36,68 @@ postgresql:
       enabled: false
     containerSecurityContext:
       enabled: false
-ingress:
-  enabled: false
+    service:
+      ports:
+        postgresql: 5432
+    auth:
+      database: artifactory
+      username: artifactory
+      password: changeme
 
-ingressGrpc:
-  enabled: false
-
+# Nginx (for Artifactory 7.77.3+)
 nginx:
   podSecurityContext:
     enabled: false
   containerSecurityContext:
     enabled: false
-  persistence:
-    enabled: false
 
-
-unifiedpolicy:
-  enabled: false
-  autoscaling:
-    enabled: false
-
-platformfederation:
-  enabled: false
-  autoscaling:
-    enabled: false
-
-jfbus:
-  enabled: false
-  autoscaling:
-    enabled: false
-
-apptrust:
-  enabled: false
-  autoscaling:
-    enabled: false
-
-filebeat:
-  enabled: false
-
-systemYamlOverride:
-  existingSecret: ""
-
+# Router service (needed for templates)
 router:
   serviceRegistry:
     insecure: false
 
-logging:
-  logToStdoutJson: ...
+# Database fallback
+database:
+  allowNonPostgresql: false
+  type: postgresql
+  driver: org.postgresql.Driver
 
+# Logging (avoid nil pointers)
+logging:
+  logToStdoutJson: false
+artifactory:
+  consoleLog: true
+
+# Frontend session
+frontend:
+  session:
+    timeoutMinutes: 30
+
+# Access service defaults
 access:
   database:
     maxOpenConnections: 50
-    enabled: false
-  javaOpts: {}
   tomcat:
     connector:
       maxThreads: 200
       sendReasonPhrase: true
       extraConfig: ""
+  javaOpts: {}
+
+# Optional: disable optional services
+jfconnect:
+  enabled: false
+jfbus:
+  enabled: false
+platformFederation:
+  enabled: false
+onemodel:
+  enabled: false
+topology:
+  enabled: false
+jfconfig:
+  enabled: false
+event:
+  webhooks: []
+evidence:
+  enabled: false
