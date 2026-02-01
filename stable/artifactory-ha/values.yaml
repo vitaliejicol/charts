@@ -47,3 +47,8 @@ jfbus:
   enabled: false
   autoscaling:
     enabled: false
+
+apptrust:
+  enabled: false
+  autoscaling:
+    enabled: false
