@@ -37,3 +37,8 @@ unifiedpolicy:
   enabled: false
   autoscaling:
     enabled: false
+
+platformfederation:
+  enabled: false
+  autoscaling:
+    enabled: false
