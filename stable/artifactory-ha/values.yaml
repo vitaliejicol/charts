@@ -1,34 +1,54 @@
-# Disable container-level security context globally
 containerSecurityContext:
   enabled: false
 
-# Artifactory pod-level security context
 artifactory:
+  unifiedSecretInstallation: false
+  masterKeySecretName: my-masterkey-secret
+  joinKeySecretName: my-joinkey-secret
   podSecurityContext:
     enabled: false
+  coldStorage:
+    enabled: false
+  worker:
+    enabled: false
   primary:
-    javaOpts: {}       # Prevent nil pointer in templates
+    javaOpts:
+      xms: ""
+      xmx: ""
+      corePoolSize: ""
+      jmx:
+        enabled: false
+        port: 1099
+        ssl: false
+        authenticate: false
+        host: ""
+        accessFile: ""
+        passwordFile: ""
+      other: ""
   database:
     maxOpenConnections: 50
   tomcat:
+    maintenanceConnector:
+      port: 0
     connector:
       maxThreads: 200
       sendReasonPhrase: true
       extraConfig: ""
-  worker:
-    enabled: false
+frontend:
+  session:
+    timeoutMinutes: "30"
 
-# RTFS (if used)
 rtfs:
   podSecurityContext:
     enabled: false
   containerSecurityContext:
     enabled: false
-  enabled: false
+  persistence:
+    federationProperties: {}
+  autoscaling:
+    enabled: false
 
-# PostgreSQL (internal Helm chart)
 postgresql:
-  enabled: true
   primary:
     podSecurityContext:
       enabled: false
@@ -36,68 +56,120 @@ postgresql:
       enabled: false
     containerSecurityContext:
       enabled: false
-    service:
-      ports:
-        postgresql: 5432
     auth:
-      database: artifactory
-      username: artifactory
-      password: changeme
+      username: ""
+      password: ""
+      database: ""
+    primary:
+      service:
+        ports:
+          postgresql: 5432
 
-# Nginx (for Artifactory 7.77.3+)
 nginx:
   podSecurityContext:
     enabled: false
   containerSecurityContext:
     enabled: false
+  persistence:
+    enabled: false
 
-# Router service (needed for templates)
+unifiedpolicy:
+  enabled: false
+  autoscaling:
+    enabled: false
+    minReplicas: 1
+    maxReplicas: 1
+    targetCPUUtilizationPercentage: 70
+
+platformfederation:
+  enabled: false
+  autoscaling:
+    enabled: false
+
+jfbus:
+  enabled: false
+  autoscaling:
+    enabled: false
+
+apptrust:
+  enabled: false
+  autoscaling:
+    enabled: false
+
+filebeat:
+  enabled: false
+
+systemYamlOverride:
+  existingSecret: ""
+
 router:
   serviceRegistry:
     insecure: false
 
-# Database fallback
-database:
-  allowNonPostgresql: false
-  type: postgresql
-  driver: org.postgresql.Driver
-
-# Logging (avoid nil pointers)
 logging:
   logToStdoutJson: false
-artifactory:
   consoleLog: true
 
-# Frontend session
-frontend:
-  session:
-    timeoutMinutes: 30
-
-# Access service defaults
 access:
   database:
     maxOpenConnections: 50
+    enabled: false
+    type: ""
+    url: ""
+    driver: ""
+    user: ""
+    password: ""
+  javaOpts:
+    other: ""
   tomcat:
     connector:
       maxThreads: 200
       sendReasonPhrase: true
       extraConfig: ""
-  javaOpts: {}
 
-# Optional: disable optional services
+metadata:
+  database:
+    maxOpenConnections: 50
+
+mc:
+  enabled: false
+  database:
+    maxOpenConnections: 50
+  idgenerator:
+    maxOpenConnections: 50
+  tomcat:
+    connector:
+      maxThreads: 50
+      sendReasonPhrase: true
+      extraConfig: ""
+
 jfconnect:
   enabled: false
-jfbus:
-  enabled: false
-platformFederation:
-  enabled: false
+  jfconnect_service:
+    enabled: false
+
 onemodel:
   enabled: false
+  apolloYaml: {}
+
 topology:
   enabled: false
+  database:
+    maxOpenConnections: 50
+  internalPort: 8080
+  javaOpts:
+    other: ""
+
 jfconfig:
   enabled: false
+  database:
+    maxOpenConnections: 50
+  internalPort: 8080
+  javaOpts:
+    other: ""
+
 event:
   webhooks: []
+
 evidence:
   enabled: false
