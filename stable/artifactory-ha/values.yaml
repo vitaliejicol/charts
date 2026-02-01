@@ -63,3 +63,6 @@ apptrust:
 
 filebeat:
   enabled: false
+
+systemYamlOverride:
+  existingSecret: ""
