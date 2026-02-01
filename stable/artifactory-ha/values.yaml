@@ -32,6 +32,9 @@ nginx:
     enabled: false
   containerSecurityContext:
     enabled: false
+  persistence:
+    enabled: false
+
 
 unifiedpolicy:
   enabled: false
