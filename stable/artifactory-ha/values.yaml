@@ -74,3 +74,6 @@ systemYamlOverride:
 router:
   serviceRegistry:
     insecure: false
+
+logging:
+  logToStdoutJson: ...
