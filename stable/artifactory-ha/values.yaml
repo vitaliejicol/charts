@@ -42,3 +42,8 @@ platformfederation:
   enabled: false
   autoscaling:
     enabled: false
+
+jfbus:
+  enabled: false
+  autoscaling:
+    enabled: false
