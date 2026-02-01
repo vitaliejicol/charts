@@ -12,31 +12,7 @@ artifactory:
   worker:
     enabled: false
   primary:
-    javaOpts:
-      xms: ""
-      xmx: ""
-      corePoolSize: ""
-      jmx:
-        enabled: false
-        port: 1099
-        ssl: false
-        authenticate: false
-        host: ""
-        accessFile: ""
-        passwordFile: ""
-      other: ""
-  database:
-    maxOpenConnections: 50
-  tomcat:
-    maintenanceConnector:
-      port: 0
-    connector:
-      maxThreads: 200
-      sendReasonPhrase: true
-      extraConfig: ""
-frontend:
-  session:
-    timeoutMinutes: "30"
+    javaOpts: {}
 
 rtfs:
   podSecurityContext:
@@ -56,14 +32,11 @@ postgresql:
       enabled: false
     containerSecurityContext:
       enabled: false
-    auth:
-      username: ""
-      password: ""
-      database: ""
-    primary:
-      service:
-        ports:
-          postgresql: 5432
+ingress:
+  enabled: false
+
+ingressGrpc:
+  enabled: false
 
 nginx:
   podSecurityContext:
@@ -73,13 +46,11 @@ nginx:
   persistence:
     enabled: false
 
+
 unifiedpolicy:
   enabled: false
   autoscaling:
     enabled: false
-    minReplicas: 1
-    maxReplicas: 1
-    targetCPUUtilizationPercentage: 70
 
 platformfederation:
   enabled: false
@@ -107,69 +78,15 @@ router:
     insecure: false
 
 logging:
-  logToStdoutJson: false
-  consoleLog: true
+  logToStdoutJson: ...
 
 access:
   database:
     maxOpenConnections: 50
     enabled: false
-    type: ""
-    url: ""
-    driver: ""
-    user: ""
-    password: ""
-  javaOpts:
-    other: ""
+  javaOpts: {}
   tomcat:
     connector:
       maxThreads: 200
       sendReasonPhrase: true
       extraConfig: ""
-
-metadata:
-  database:
-    maxOpenConnections: 50
-
-mc:
-  enabled: false
-  database:
-    maxOpenConnections: 50
-  idgenerator:
-    maxOpenConnections: 50
-  tomcat:
-    connector:
-      maxThreads: 50
-      sendReasonPhrase: true
-      extraConfig: ""
-
-jfconnect:
-  enabled: false
-  jfconnect_service:
-    enabled: false
-
-onemodel:
-  enabled: false
-  apolloYaml: {}
-
-topology:
-  enabled: false
-  database:
-    maxOpenConnections: 50
-  internalPort: 8080
-  javaOpts:
-    other: ""
-
-jfconfig:
-  enabled: false
-  database:
-    maxOpenConnections: 50
-  internalPort: 8080
-  javaOpts:
-    other: ""
-
-event:
-  webhooks: []
-
-evidence:
-  enabled: false
