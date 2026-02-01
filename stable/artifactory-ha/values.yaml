@@ -31,7 +31,7 @@ ingress:
 
 ingressGrpc:
   enabled: false
-  
+
 nginx:
   podSecurityContext:
     enabled: false
@@ -60,3 +60,6 @@ apptrust:
   enabled: false
   autoscaling:
     enabled: false
+
+filebeat:
+  enabled: false
